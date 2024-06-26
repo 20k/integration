@@ -60,10 +60,12 @@ namespace integrate
     inline
     auto spherical_integrate(const T& f_theta_phi, int n, float radius = 1)
     {
-        float iupper = 2 * M_PI;
+        float pi = 3.14159265358979323846264338327950288;
+
+        float iupper = 2 * pi;
         float ilower = 0;
 
-        float jupper = M_PI;
+        float jupper = pi;
         float jlower = 0;
 
         ///https://cbeentjes.github.io/files/Ramblings/QuadratureSphere.pdf7 7
@@ -86,9 +88,7 @@ namespace integrate
     {
         auto cartesian_function = [&](float theta, float phi)
         {
-            vec3f pos = {cartesian_radius * cos(phi) * sin(theta), cartesian_radius * sin(phi) * sin(theta), cartesian_radius * cos(theta)};
-
-            return f_pos(pos);
+            return f_pos({cartesian_radius * cos(phi) * sin(theta), cartesian_radius * sin(phi) * sin(theta), cartesian_radius * cos(theta)});
         };
 
         return spherical_integrate(cartesian_function, n, sphere_radius);
